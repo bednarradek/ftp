@@ -915,6 +915,14 @@ func (c *ServerConn) Stor(path string, r io.Reader) error {
 	return c.StorFrom(path, r, 0)
 }
 
+func (c *ServerConn) Chmod(path string, bytes string) error {
+	_, _, err := c.cmd(StatusCommandOK, "SITE CHMOD %s %s", bytes, path)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
 // checkDataShut reads the "closing data connection" status from the
 // control connection. It is called after transferring a piece of data
 // on the data connection during which the control connection was idle.
